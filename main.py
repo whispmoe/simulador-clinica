@@ -35,21 +35,36 @@ def registrar_paciente():
 
 
 def atender_siguiente_paciente():
-    for p in range (10):
-        prueba = paciente.get("nombre")
-        print (prueba)
-        p += 1
+    if not PACIENTES_ESPERA:
+        print("No hay pacientes en espera")
+        return
+    for p in enumerate(PACIENTES_ESPERA):
+        p = paciente.get('prioridad') == 'u'
+    nombre = paciente.get('nombre')
+    print(f"Atendiendo a {nombre}")
+    PACIENTES_ATENDIDOS.append(nombre)
+    for i, pacientes in enumerate(PACIENTES_ESPERA):
+        if PACIENTES_ESPERA.get("nombre") == nombre:
+            del PACIENTES_ESPERA[i]
+            break
+    """ for i, e in enumerate(PACIENTES_ESPERA):
+        if paciente.get("nombre") == nombre:
+            paciente.remove(i) """
     pass
 
 
 def ver_estado_cola():
-    print (paciente)
+    if not PACIENTES_ESPERA:
+        print("No hay personas en cola")
+    print (PACIENTES_ESPERA)
     pass
 
 
 def ver_pacientes_atendidos():
-    if PACIENTES_ATENDIDOS == []:
+    if not PACIENTES_ATENDIDOS:
         print("No hay pacientes atendidos por el momento")
+    else:
+        print(PACIENTES_ATENDIDOS)
     pass
 
 
