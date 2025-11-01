@@ -38,18 +38,22 @@ def atender_siguiente_paciente():
     if not PACIENTES_ESPERA:
         print("No hay pacientes en espera")
         return
-    for p in enumerate(PACIENTES_ESPERA):
-        p = paciente.get('prioridad') == 'u'
-    nombre = paciente.get('nombre')
-    print(f"Atendiendo a {nombre}")
-    PACIENTES_ATENDIDOS.append(nombre)
-    for i, pacientes in enumerate(PACIENTES_ESPERA):
-        if PACIENTES_ESPERA.get("nombre") == nombre:
-            del PACIENTES_ESPERA[i]
-            break
-    """ for i, e in enumerate(PACIENTES_ESPERA):
-        if paciente.get("nombre") == nombre:
-            paciente.remove(i) """
+
+    for i, paciente in enumerate(PACIENTES_ESPERA):
+        if paciente.get('prioridad') == 'u':
+            nombre = paciente.get('nombre')
+            PACIENTES_ATENDIDOS.append(nombre)
+            print(f"Atendiendo a {nombre}")
+            PACIENTES_ESPERA.pop(i)
+            return
+
+    for i, paciente in enumerate(PACIENTES_ESPERA):
+        if paciente.get('prioridad') == 'n':
+            nombre = paciente.get('nombre')
+            PACIENTES_ATENDIDOS.append(nombre)
+            print(f"Atendiendo a {nombre}")
+            PACIENTES_ESPERA.pop(i)
+            return
     pass
 
 
