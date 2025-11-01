@@ -73,7 +73,10 @@ def ver_pacientes_atendidos():
 
 
 def calcular_tiempo_promedio():
-    # Implementación pendiente
+    tiempo = 0
+    for i in range(len(PACIENTES_ESPERA)):
+        tiempo += 3
+    print(f"El tiempo faltante para que sea atendido es de {tiempo}horas")
     pass
 
 
