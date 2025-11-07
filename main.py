@@ -1,3 +1,4 @@
+# Aqui importamos las librerias.
 from rich import print
 from rich.text import Text
 from rich.panel import Panel
@@ -13,6 +14,8 @@ NOMBRE_CLINICA = "Clínica Pavas"
 
 
 def registrar_paciente():
+    # Le pedimos al usuario que ingrese su nombre.
+    # El nombre que el usuario ponga quedaria guardado en la variable nombre.
     nombre = inquirer.text(
         message="Nombre del paciente:",
         validate=EmptyInputValidator(message="El nombre no puede estar vacío"),
@@ -30,8 +33,9 @@ def registrar_paciente():
         "nombre": nombre,
         "prioridad": prioridad
     }
-    globals()["paciente"] = paciente
-    PACIENTES_ESPERA.append(paciente)
+     # con el append agregamos una variable a la lista.
+    PACIENTES_ESPERA.append(paciente)   
+   
 
 
 def atender_siguiente_paciente():
@@ -41,6 +45,7 @@ def atender_siguiente_paciente():
 
     for i, paciente in enumerate(PACIENTES_ESPERA):
         if paciente.get('prioridad') == 'u':
+        # Con el get 
             nombre = paciente.get('nombre')
             PACIENTES_ATENDIDOS.append(nombre)
             print(f"Atendiendo a {nombre}")
