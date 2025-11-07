@@ -95,6 +95,8 @@ def calcular_tiempo_promedio():
             "[bold red]No hay pacientes atendidos para calcular el tiempo promedio[/bold red]")
         return
 
+    # El tiempo promedio es generado de manera aleatoria en la funcion
+    # atender_siguiente_paciente()
     tiempo_str = f"{int(tiempo)}" if tiempo.is_integer() else f"{tiempo}"
 
     print(
