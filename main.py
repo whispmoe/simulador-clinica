@@ -1,4 +1,6 @@
 # Aqui importamos las librerias.
+import random
+
 from rich import print
 from rich.text import Text
 from rich.panel import Panel
@@ -11,6 +13,7 @@ PACIENTES_ESPERA = []
 PACIENTES_ATENDIDOS = []
 
 NOMBRE_CLINICA = "Clínica Pavas"
+tiempo = 0.0
 
 
 def registrar_paciente():
@@ -33,22 +36,26 @@ def registrar_paciente():
         "nombre": nombre,
         "prioridad": prioridad
     }
-     # con el append agregamos una variable a la lista.
-    PACIENTES_ESPERA.append(paciente)   
-   
+
+    # Con el append agregamos una variable a la lista.
+    PACIENTES_ESPERA.append(paciente)
 
 
 def atender_siguiente_paciente():
+    global tiempo
+
     if not PACIENTES_ESPERA:
-        print("No hay pacientes en espera")
+        print("[bold red]No hay pacientes en espera[/bold red]")
         return
 
+    tiempo = round(random.uniform(0.5, 2.0), 2)
     for i, paciente in enumerate(PACIENTES_ESPERA):
         if paciente.get('prioridad') == 'u':
-        # Con el get 
             nombre = paciente.get('nombre')
             PACIENTES_ATENDIDOS.append(nombre)
-            print(f"Atendiendo a {nombre}")
+            print(f"[bold]Atendiendo a [cyan]{nombre}[/cyan][/bold]")
+
+            # Eliminar el paciente de la lista
             PACIENTES_ESPERA.pop(i)
             return
 
@@ -56,33 +63,42 @@ def atender_siguiente_paciente():
         if paciente.get('prioridad') == 'n':
             nombre = paciente.get('nombre')
             PACIENTES_ATENDIDOS.append(nombre)
-            print(f"Atendiendo a {nombre}")
+            print(f"[bold]Atendiendo a [cyan]{nombre}[/cyan][/bold]")
+
+            # Eliminar el paciente de la lista
             PACIENTES_ESPERA.pop(i)
             return
-    pass
 
 
 def ver_estado_cola():
     if not PACIENTES_ESPERA:
-        print("No hay personas en cola")
-    print (PACIENTES_ESPERA)
-    pass
+        print("[bold red]No hay personas en cola[/bold red]")
+
+    for i, paciente in enumerate(PACIENTES_ESPERA, start=1):
+        print(
+            f"{i}. [bold cyan]{paciente.get('nombre')}[/bold cyan] "
+            f"[dim](Prioridad: {'Urgente' if paciente.get('prioridad') == 'u' else 'Normal'})[/dim]"
+        )
 
 
 def ver_pacientes_atendidos():
     if not PACIENTES_ATENDIDOS:
-        print("No hay pacientes atendidos por el momento")
+        print("[bold red]No hay pacientes atendidos por el momento[/bold red]")
     else:
-        print(PACIENTES_ATENDIDOS)
-    pass
+        for i, nombre in enumerate(PACIENTES_ATENDIDOS, start=1):
+            print(f"{i}. [bold green]{nombre}[/bold green]")
 
 
 def calcular_tiempo_promedio():
-    tiempo = 0
-    for i in range(len(PACIENTES_ESPERA)):
-        tiempo += 3
-    print(f"El tiempo faltante para que sea atendido es de {tiempo}horas")
-    pass
+    if not PACIENTES_ATENDIDOS:
+        print(
+            "[bold red]No hay pacientes atendidos para calcular el tiempo promedio[/bold red]")
+        return
+
+    tiempo_str = f"{int(tiempo)}" if tiempo.is_integer() else f"{tiempo}"
+
+    print(
+        f"El tiempo promedio de atención es de [bold]{tiempo_str} horas[/bold]")
 
 
 def main():
